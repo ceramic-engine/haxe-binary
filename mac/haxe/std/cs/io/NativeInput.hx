@@ -53,11 +53,7 @@ class NativeInput extends Input {
 	override public function readBytes(s:Bytes, pos:Int, len:Int):Int {
 		if (pos < 0 || len < 0 || pos + len > s.length)
 			throw Error.OutsideBounds;
-		var ret = 0;
-		var data = s.getData();
-		try {
-			ret = stream.Read(data, pos, len);
-		} catch (e: Dynamic) {}
+		var ret = stream.Read(s.getData(), pos, len);
 		if (ret == 0) {
 			_eof = true;
 			throw new Eof();

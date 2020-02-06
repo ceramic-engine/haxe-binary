@@ -74,7 +74,7 @@ class HttpJs extends haxe.http.HttpBase {
 			if (s != null && s >= 200 && s < 400) {
 				req = null;
 				success(Bytes.ofData(r.response));
-			} else if (s == null || (s == 0 && r.response == null)) {
+			} else if (s == null) {
 				req = null;
 				onError("Failed to connect or resolve host");
 			} else
@@ -87,7 +87,7 @@ class HttpJs extends haxe.http.HttpBase {
 						onError("Unknown host");
 					default:
 						req = null;
-						responseBytes = r.response != null ? Bytes.ofData(r.response) : null;
+						responseBytes = Bytes.ofData(r.response);
 						onError("Http Error #" + r.status);
 				}
 		};
