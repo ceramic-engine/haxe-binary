@@ -108,25 +108,15 @@ class EntryPoint {
 	@:keep public static function run() @:privateAccess {
 		#if js
 		var nextTick = processEvents();
-		inline function setTimeoutNextTick() {
-			if (nextTick >= 0) {
-				(untyped setTimeout)(run, nextTick);
-			}
-		}
+
 		#if nodejs
-		setTimeoutNextTick();
+		if (nextTick < 0)
+			return;
+		(untyped setTimeout)(run, nextTick);
 		#else
-		if(js.Lib.typeof(js.Browser.window) != 'undefined') {
-			var window:Dynamic = js.Browser.window;
-			var rqf:Dynamic = window.requestAnimationFrame || window.webkitRequestAnimationFrame || window.mozRequestAnimationFrame;
-			if(rqf != null) {
-				rqf(run);
-			} else {
-				setTimeoutNextTick();
-			}
-		} else {
-			setTimeoutNextTick();
-		}
+		var window:Dynamic = js.Browser.window;
+		var rqf:Dynamic = window.requestAnimationFrame || window.webkitRequestAnimationFrame || window.mozRequestAnimationFrame;
+		rqf(run);
 		#end
 		#elseif flash
 		flash.Lib.current.stage.addEventListener(flash.events.Event.ENTER_FRAME, function(_) processEvents());

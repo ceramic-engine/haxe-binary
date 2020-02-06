@@ -22,6 +22,8 @@
 
 package js.lib;
 
+import js.lib.Iterator;
+
 /**
 	The (native) JavaScript Map object holds key-value pairs.
 	Any value (both objects and primitive values) may be used as either a key
@@ -86,25 +88,31 @@ extern class Map<K, V> {
 		Returns a new `Iterator` object that contains the keys for each element
 		in the `js.Map` object in insertion order.
 	**/
-	function keys():js.lib.Iterator<K>;
+	function keys():Iterator<K>;
 
 	/**
 		Returns a new `Iterator` object that contains the values for each
 		element in the `js.Map` object in insertion order.
 	**/
-	function values():js.lib.Iterator<V>;
+	function values():Iterator<V>;
 
 	/**
-		Returns a new `Iterator` object that contains an array of `KeyValue`
+		Returns a new `Iterator` object that contains an array of `MapEntry`
 		for each element in the `js.Map` object in insertion order.
 	**/
-	function entries():js.lib.Iterator<KeyValue<K, V>>;
+	function entries():Iterator<MapEntry<K, V>>;
+}
 
-	inline function iterator():js.lib.HaxeIterator<V> {
-		return new HaxeIterator(this.values());
-	}
+/**
+	Key/value access helper for `js.Map.entries()` and `js.Set.entries()`.
+**/
+abstract MapEntry<K, V>(Array<Any>) {
+	public var key(get, never):K;
+	public var value(get, never):V;
 
-	inline function keyValueIterator():HaxeIterator<KeyValue<K, V>> {
-		return new HaxeIterator(this.entries());
-	}
+	inline function get_key():K
+		return this[0];
+
+	inline function get_value():V
+		return this[1];
 }
