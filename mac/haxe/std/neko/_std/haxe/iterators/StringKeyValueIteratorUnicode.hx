@@ -19,19 +19,47 @@
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
  * DEALINGS IN THE SOFTWARE.
  */
+package haxe.iterators;
 
-package python.internal;
+class StringKeyValueIteratorUnicode {
+	var byteOffset:Int = 0;
+	var charOffset:Int = 0;
+	var s:String;
 
-@:ifFeature("has_throw")
-@:native("_HxException")
-class HxException extends python.Exceptions.Exception {
-	@:ifFeature("has_throw")
-	public var val:Dynamic;
+	public inline function new(s:String) {
+		this.s = s;
+	}
 
-	@:ifFeature("has_throw")
-	public function new(val:Dynamic) {
-		var message = UBuiltins.str(val);
-		super(message);
-		this.val = val;
+	public inline function hasNext() {
+		return byteOffset < s.length;
+	}
+
+	public inline function next() {
+		var code:Int = codeAt(byteOffset);
+		if (code < 0xC0) {
+			byteOffset++;
+		} else if (code < 0xE0) {
+			code = ((code - 0xC0) << 6) + codeAt(byteOffset + 1) - 0x80;
+			byteOffset += 2;
+		} else if (code < 0xF0) {
+			code = ((code - 0xE0) << 12) + ((codeAt(byteOffset + 1) - 0x80) << 6) + codeAt(byteOffset + 2) - 0x80;
+			byteOffset += 3;
+		} else {
+			code = ((code - 0xF0) << 18)
+				+ ((codeAt(byteOffset + 1) - 0x80) << 12)
+				+ ((codeAt(byteOffset + 2) - 0x80) << 6)
+				+ codeAt(byteOffset + 3)
+				- 0x80;
+			byteOffset += 4;
+		}
+		return {key: charOffset++, value: code};
+	}
+
+	inline function codeAt(index:Int):Int {
+		return untyped $sget(s.__s, index);
+	}
+
+	static public inline function unicodeKeyValueIterator(s:String) {
+		return new StringKeyValueIteratorUnicode(s);
 	}
 }
