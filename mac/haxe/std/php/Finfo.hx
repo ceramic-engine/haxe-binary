@@ -1,5 +1,5 @@
 /*
- * Copyright (C)2005-2019 Haxe Foundation
+ * Copyright (C)2005-2021 Haxe Foundation
  *
  * Permission is hereby granted, free of charge, to any person obtaining a
  * copy of this software and associated documentation files (the "Software"),
@@ -20,33 +20,17 @@
  * DEALINGS IN THE SOFTWARE.
  */
 
-package haxe.xml;
+package php;
+
+import haxe.extern.EitherType;
 
 /**
-	This proxy can be inherited with an XML file name parameter.
-	It will	only allow access to fields which corresponds to an "id" attribute
-	value in the XML file :
-
-	```haxe
-	class MyXml extends haxe.xml.Proxy<"my.xml", MyStructure> {
-	}
-
-	var h = new haxe.ds.StringMap<MyStructure>();
-	// ... fill h with "my.xml" content
-	var m = new MyXml(h.get);
-	trace(m.myNode.structField);
-	// Access to "myNode" is only possible if you have an id="myNode" attribute
-	// in your XML, and completion works as well.
-	```
+	@see https://www.php.net/manual/en/class.finfo.php
 **/
-class Proxy<Const, T> {
-	var __f:String->T;
-
-	public function new(f) {
-		this.__f = f;
-	}
-
-	public function resolve(k) {
-		return __f(k);
-	}
+@:native("finfo")
+extern class Finfo {
+	function new(?flags: Int, magic_database: String = "");
+	function buffer(string: String, ?flags: Int, ?context:Resource): EitherType<String, Bool>;
+	function file(filename: String, ?flags: Int, ?context:Resource): EitherType<String, Bool>;
+	function set_flags(flags: Int): Bool;
 }
