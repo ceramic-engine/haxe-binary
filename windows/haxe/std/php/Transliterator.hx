@@ -1,5 +1,5 @@
 /*
- * Copyright (C)2005-2019 Haxe Foundation
+ * Copyright (C)2005-2020 Haxe Foundation
  *
  * Permission is hereby granted, free of charge, to any person obtaining a
  * copy of this software and associated documentation files (the "Software"),
@@ -20,33 +20,26 @@
  * DEALINGS IN THE SOFTWARE.
  */
 
-package haxe.xml;
+package php;
+
+import haxe.extern.EitherType;
 
 /**
-	This proxy can be inherited with an XML file name parameter.
-	It will	only allow access to fields which corresponds to an "id" attribute
-	value in the XML file :
-
-	```haxe
-	class MyXml extends haxe.xml.Proxy<"my.xml", MyStructure> {
-	}
-
-	var h = new haxe.ds.StringMap<MyStructure>();
-	// ... fill h with "my.xml" content
-	var m = new MyXml(h.get);
-	trace(m.myNode.structField);
-	// Access to "myNode" is only possible if you have an id="myNode" attribute
-	// in your XML, and completion works as well.
-	```
+	@see https://www.php.net/manual/en/class.transliterator.php
 **/
-class Proxy<Const, T> {
-	var __f:String->T;
+@:native("Transliterator")
+extern class Transliterator {
+	@:phpClassConst static final FORWARD: Int;
+	@:phpClassConst static final REVERSE: Int;
 
-	public function new(f) {
-		this.__f = f;
-	}
+	var id: String;
 
-	public function resolve(k) {
-		return __f(k);
-	}
+	static function create(id: String, ?direction: Int): Null<Transliterator>;
+	static function createFromRules(rules: String, ?direction: Int): Null<Transliterator>;
+	static function listIDs(): EitherType<Array<String>, Bool>;
+
+	function createInverse(): Null<Transliterator>;
+	function getErrorCode(): EitherType<Int, Bool>;
+	function getErrorMessage(): EitherType<String, Bool>;
+	function transliterate(subject: String, ?start: Int, ?end: Int): EitherType<String, Bool>;
 }
