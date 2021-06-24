@@ -112,9 +112,9 @@
 #endif
 
 #define NEKO_VERSION_MAJOR	2
-#define NEKO_VERSION_MINOR	2
+#define NEKO_VERSION_MINOR	3
 #define NEKO_VERSION_PATCH	0
-#define NEKO_VERSION		220
+#define NEKO_VERSION		230
 
 #define NEKO_MODULE_PATH	"C:/HaxeToolkit/neko"
 

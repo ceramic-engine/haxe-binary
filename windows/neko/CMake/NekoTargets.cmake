@@ -61,7 +61,7 @@ add_executable(nekotools IMPORTED)
 add_library(libneko SHARED IMPORTED)
 
 set_target_properties(libneko PROPERTIES
-  INTERFACE_LINK_LIBRARIES "C:/projects/neko/libs/src/BoehmGC-build/\$(Configuration)/gcmt-dll.lib"
+  INTERFACE_LINK_LIBRARIES "D:/a/1/s/libs/src/BoehmGC-build/\$(Configuration)/gcmt-dll.lib"
 )
 
 # Create imported target nekoml
