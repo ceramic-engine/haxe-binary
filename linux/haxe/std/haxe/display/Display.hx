@@ -36,47 +36,47 @@ class DisplayMethods {
 		The completion request is sent from the client to Haxe to request code completion.
 		Haxe automatically determines the type of completion to use based on the passed position, see `CompletionResultKind`.
 	**/
-	static inline var Completion = new HaxeRequestMethod<CompletionParams, CompletionResult>("display/completion");
+	static /*inline*/ var Completion = new HaxeRequestMethod<CompletionParams, CompletionResult>("display/completion");
 
 	/**
 		The request is sent from the client to Haxe to resolve additional information for a given completion item.
 	**/
-	static inline var CompletionItemResolve = new HaxeRequestMethod<CompletionItemResolveParams, CompletionItemResolveResult>("display/completionItem/resolve");
+	static /*inline*/ var CompletionItemResolve = new HaxeRequestMethod<CompletionItemResolveParams, CompletionItemResolveResult>("display/completionItem/resolve");
 
 	/**
 		The find references request is sent from the client to Haxe to find locations that reference the symbol at a given text document position.
 	**/
-	static inline var FindReferences = new HaxeRequestMethod<FindReferencesParams, GotoDefinitionResult>("display/references");
+	static /*inline*/ var FindReferences = new HaxeRequestMethod<FindReferencesParams, GotoDefinitionResult>("display/references");
 
 	/**
 		The goto definition request is sent from the client to Haxe to resolve the definition location(s) of a symbol at a given text document position.
 	**/
-	static inline var GotoDefinition = new HaxeRequestMethod<PositionParams, GotoDefinitionResult>("display/definition");
+	static /*inline*/ var GotoDefinition = new HaxeRequestMethod<PositionParams, GotoDefinitionResult>("display/definition");
 
 	/**
 		The goto implementation request is sent from the client to Haxe to resolve the implementation location(s) of a symbol at a given text document position.
 	**/
-	static inline var GotoImplementation = new HaxeRequestMethod<PositionParams, GotoDefinitionResult>("display/implementation");
+	static /*inline*/ var GotoImplementation = new HaxeRequestMethod<PositionParams, GotoDefinitionResult>("display/implementation");
 
 	/**
 		The goto type definition request is sent from the client to Haxe to resolve the type definition location(s) of a symbol at a given text document position.
 	**/
-	static inline var GotoTypeDefinition = new HaxeRequestMethod<PositionParams, GotoTypeDefinitionResult>("display/typeDefinition");
+	static /*inline*/ var GotoTypeDefinition = new HaxeRequestMethod<PositionParams, GotoTypeDefinitionResult>("display/typeDefinition");
 
 	/**
 		The hover request is sent from the client to Haxe to request hover information at a given text document position.
 	**/
-	static inline var Hover = new HaxeRequestMethod<PositionParams, HoverResult>("display/hover");
+	static /*inline*/ var Hover = new HaxeRequestMethod<PositionParams, HoverResult>("display/hover");
 
 	/**
 		This request is sent from the client to Haxe to determine the package for a given file, based on class paths configuration.
 	**/
-	static inline var DeterminePackage = new HaxeRequestMethod<FileParams, DeterminePackageResult>("display/package");
+	static /*inline*/ var DeterminePackage = new HaxeRequestMethod<FileParams, DeterminePackageResult>("display/package");
 
 	/**
 		The signature help request is sent from the client to Haxe to request signature information at a given cursor position.
 	**/
-	static inline var SignatureHelp = new HaxeRequestMethod<SignatureHelpParams, SignatureHelpResult>("display/signatureHelp");
+	static /*inline*/ var SignatureHelp = new HaxeRequestMethod<SignatureHelpParams, SignatureHelpResult>("display/signatureHelp");
 
 	/*
 		TODO:
@@ -295,6 +295,7 @@ typedef Metadata = {
 	var platforms:Array<Platform>;
 	var targets:Array<MetadataTarget>;
 	var internal:Bool;
+	var ?origin:String;
 	var ?links:Array<String>;
 }
 
