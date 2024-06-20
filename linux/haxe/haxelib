@@ -1,8 +1,14 @@
 #!/bin/bash
-export HAXEPATH=${0%/*}
-export NEKOPATH=${0%/*}/../neko
+if [ -z "${HAXEPATH}" ]; then
+  export HAXEPATH=${0%/*}
+fi
+if [ -z "${NEKOPATH}" ]; then
+  export NEKOPATH=${0%/*}/../neko
+fi
+if [ -z "${HAXELIB_PATH}" ]; then
+  export HAXELIB_PATH=${0%/*}/../../../../.haxelib
+fi
 export PATH=$HAXEPATH:$NEKOPATH:$PATH
 export HAXE_STD_PATH=$HAXEPATH/std
-export HAXELIB_PATH=${0%/*}/../../../../.haxelib
 export DYLD_FALLBACK_LIBRARY_PATH=$NEKOPATH
 "${0%/*}"/haxelib-bin "$@"
