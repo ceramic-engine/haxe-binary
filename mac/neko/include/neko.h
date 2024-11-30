@@ -1,5 +1,5 @@
 /*
- * Copyright (C)2005-2017 Haxe Foundation
+ * Copyright (C)2005-2022 Haxe Foundation
  *
  * Permission is hereby granted, free of charge, to any person obtaining a
  * copy of this software and associated documentation files (the "Software"),
@@ -74,7 +74,7 @@
 #	define NEKO_PPC
 #endif
 
-#if defined(_64BITS) || defined(__x86_64__)
+#if defined(_64BITS) || defined(__x86_64__) || defined(_M_AMD64)
 #	define NEKO_64BITS
 #endif
 
@@ -112,9 +112,11 @@
 #endif
 
 #define NEKO_VERSION_MAJOR	2
-#define NEKO_VERSION_MINOR	3
+#define NEKO_VERSION_MINOR	4
 #define NEKO_VERSION_PATCH	0
-#define NEKO_VERSION		230
+#define NEKO_VERSION		240
+
+#define NEKO_BUILD_YEAR		2024
 
 #define NEKO_MODULE_PATH	"/usr/local/lib/neko"
 
